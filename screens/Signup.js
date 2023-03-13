@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, ImageBackground, Text, View, Button, TextInput, Image, SafeAreaView, TouchableOpacity, StatusBar, Alert } from "react-native";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, doc, set } from 'firebase/firestore';
 import { storage } from '../config/firebase'
@@ -24,11 +24,16 @@ const Signup = ({ navigation }) => {
     const handleUpload = async (image) => {
         const response = await fetch(image);
         const blobFile = await response.blob();
-        const imageName = `${uid}/avatar`;
+        const imageName = uniqueID().toString();
         const reference = ref(storage, imageName);
         const result = await uploadBytes(reference, blobFile);
         const url = await getDownloadURL(result.ref);
-        
+
+        // save user's profile pic's url
+        await updateProfile(auth.currentUser, {
+            photoURL: url
+        });
+
     }
 
     const handleSignup = () => {
