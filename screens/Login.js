@@ -36,8 +36,8 @@ const Login = ({ navigation }) => {
                             />
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.text}> Log In</Text>
-                </TouchableOpacity
-                ><TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Signup')}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Signup')}>
                     <Text style={styles.text}>Go to Sign Up</Text>
                 </TouchableOpacity>
             </View>

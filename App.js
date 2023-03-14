@@ -5,19 +5,21 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './config/firebase';
 import ChatList from './screens/Home';
 import Signup from './screens/Signup';
-import Login from './screens/Login';
+import Login from './screens/Login'
+import Chatbox from './screens/Chatbox';
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const Stack = createStackNavigator();
 const AuthenticatedUserContext = createContext({});
 
+
 const AuthenticatedUserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   return (
-      <AuthenticatedUserContext.Provider value={{ user, setUser }}>
-        {children}
-      </AuthenticatedUserContext.Provider>
-    );
+    <AuthenticatedUserContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthenticatedUserContext.Provider>
+  );
 };
 
 const AuthStack = () => {
@@ -31,9 +33,10 @@ const AuthStack = () => {
 
 const ChatStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name='Home' component={ChatList} />
-    </Stack.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name='Home' component={ChatList} />
+        <Stack.Screen name='Chat' component={Chatbox} />
+      </Stack.Navigator>
   )
 }
 

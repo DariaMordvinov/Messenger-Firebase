@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, ImageBackground, Text, View, Button, TextInput, Image, SafeAreaView, TouchableOpacity, StatusBar, Alert } from "react-native";
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, doc, set } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { storage } from '../config/firebase'
 import { auth } from '../config/firebase';
 import { database } from '../config/firebase'
@@ -33,6 +33,18 @@ const Signup = ({ navigation }) => {
         await updateProfile(auth.currentUser, {
             photoURL: url
         });
+
+        try {
+            await addDoc(collection(database, 'users'), {
+                uid: auth.currentUser.uid,
+                name: username,
+                profile_pic: url
+            })
+        } catch(er) {
+            console.log(er)
+        }
+
+
 
     }
 
